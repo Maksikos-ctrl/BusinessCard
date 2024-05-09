@@ -1,0 +1,43 @@
+Funkcie aplikácie:
+
+-Vytváranie nových vizitiek zadávaním informácií ako meno, priezvisko, titul,
+spoločnosť, adresa, telefónne číslo, e-mail, web, logo, QR kód, atď. +
+
+- Zobrazenie náhľadu vizitky: Po zadaní informácií by aplikácia mala zobraziť
+náhľad vizitky tak, ako bude vyzerať po vytlačení alebo uložení.
+Možnosti formátovania: možnosť výberu rôznych štýlov, písiem, farieb a
+rozloženia textu na vizitke. (+)
+
+- Import a export údajov: možnosť importovať a exportovať svoje vizitky vo
+formátoch ako JPEG, PNG, PDF a pod. (+)
+
+- Správa vizitiek: Aplikácia by mala ponúkať možnosti pre správu vizitiek,
+vrátane úprav, odstránení a triedenia vizitiek podľa rôznych kritérií. (+)
+
+- Šablóny vizitiek: Možnosť využitia preddefinovaných šablón vizitiek pre
+rýchlejšie vytváranie vizitiek. (+)
+
+- Možnosť tlače: Užívatelia by mali mať možnosť tlačiť svoje vizitky priamo z
+aplikácie. (teoretically has to work)
+
+- Ukladanie a načítanie projektov: Možnosť ukladania a načítania projektov
+vizitiek pre neskoršie úpravy a použitie. (+)
+
+Intuitívne užívateľské rozhranie: jednoduché a intuitívne užívateľské
+rozhranie (responzívne) (+)
+
+
+Všeobecné požiadavky
+-javadoc (min. pre kľúčové funkcionality)
+-Stručná dokumentácia s názornými grafickými ukážkami (2-4 strany)
+-Unikátne riešenie
+-prehľadný kód (jednotlivé funkcionality ako metódy)
+-obhajoba 13. Týždeň - (popr. 12 po dohode)
+
+
+Odovzdanie elektronicky 12.05.2024 do 20:00 cez MS Teams (v jednom subore –
+zip/rar) a kontrola originality pomocou systému odevzdej.cz. Všetky časti skriptu nakopírujte
+do jedného súboru s názvom v tvare: priezvisko-meno.txt (všetko bez diakritiky). Súbor
+odovzdajte cez stránku: https://odevzdej.cz/auth/doc/mlswpb/e47toca/
+-
+Na skúške možná kontrolná obhajoba práce
