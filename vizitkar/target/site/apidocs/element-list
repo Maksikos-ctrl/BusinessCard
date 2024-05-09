@@ -1,0 +1,14 @@
+com.vizitkar
+com.vizitkar.BusinessCardGUI.BusinessCardGUI
+com.vizitkar.BusinessCardGUI.Dialogs
+com.vizitkar.Buttons.ExportButton
+com.vizitkar.Buttons.QRCodeButton
+com.vizitkar.Buttons.TextResizeButton
+com.vizitkar.Helper.ImageTransitionHelper
+com.vizitkar.Manager.TemplateManager
+com.vizitkar.UI.CardUI
+com.vizitkar.UI.UIComponents
+com.vizitkar.Utils.AnimationUtils
+com.vizitkar.Utils.FileIOUtils
+com.vizitkar.Utils.PrintUtils
+com.vizitkar.Utils.QRCodeUtilis

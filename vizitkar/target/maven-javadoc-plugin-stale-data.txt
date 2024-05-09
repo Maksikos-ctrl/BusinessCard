@@ -1,0 +1,92 @@
+@options
+@packages
+-classpath
+'/home/maksikos973/.m2/repository/org/openjfx/javafx-controls/16/javafx-controls-16.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-controls/16/javafx-controls-16-linux.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-graphics/16/javafx-graphics-16.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-graphics/16/javafx-graphics-16-linux.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-base/16/javafx-base-16.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-base/16/javafx-base-16-linux.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-fxml/16/javafx-fxml-16.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-fxml/16/javafx-fxml-16-linux.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-web/16/javafx-web-16.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-web/16/javafx-web-16-linux.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-media/16/javafx-media-16.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-media/16/javafx-media-16-linux.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-swing/19/javafx-swing-19.jar:/home/maksikos973/.m2/repository/org/openjfx/javafx-swing/19/javafx-swing-19-linux.jar:/home/maksikos973/.m2/repository/com/squareup/okhttp3/okhttp/4.9.1/okhttp-4.9.1.jar:/home/maksikos973/.m2/repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar:/home/maksikos973/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.0/kotlin-stdlib-common-1.4.0.jar:/home/maksikos973/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.10/kotlin-stdlib-1.4.10.jar:/home/maksikos973/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:/home/maksikos973/.m2/repository/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar:/home/maksikos973/.m2/repository/org/json/json/20210307/json-20210307.jar:/home/maksikos973/.m2/repository/com/google/zxing/javase/3.4.1/javase-3.4.1.jar:/home/maksikos973/.m2/repository/com/google/zxing/core/3.4.1/core-3.4.1.jar:/home/maksikos973/.m2/repository/com/beust/jcommander/1.78/jcommander-1.78.jar:/home/maksikos973/.m2/repository/org/apache/pdfbox/pdfbox-tools/2.0.24/pdfbox-tools-2.0.24.jar:/home/maksikos973/.m2/repository/org/apache/pdfbox/pdfbox-debugger/2.0.24/pdfbox-debugger-2.0.24.jar:/home/maksikos973/.m2/repository/org/apache/pdfbox/pdfbox/2.0.24/pdfbox-2.0.24.jar:/home/maksikos973/.m2/repository/org/apache/pdfbox/fontbox/2.0.24/fontbox-2.0.24.jar:/home/maksikos973/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'11'
+-sourcepath
+'/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'vizitkar 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/en/java/javase/11/docs/api' '/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'vizitkar 1.0-SNAPSHOT API'
+com.vizitkar.UI.UIComponents
+com.vizitkar.UI.CardUI
+com.vizitkar.Helper.ImageTransitionHelper
+com.vizitkar.Manager.TemplateManager
+com.vizitkar.Buttons.ExportButton
+com.vizitkar.Buttons.TextResizeButton
+com.vizitkar.Buttons.QRCodeButton
+com.vizitkar.BusinessCardGUI.Dialogs
+com.vizitkar.BusinessCardGUI.BusinessCardGUI
+com.vizitkar.Utils.AnimationUtils
+com.vizitkar.Utils.PrintUtils
+com.vizitkar.Utils.FileIOUtils
+com.vizitkar.Utils.QRCodeUtilis
+com.vizitkar
+/home/maksikos973/.m2/repository/org/openjfx/javafx-controls/16/javafx-controls-16.jar = 1615222544000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-controls/16/javafx-controls-16-linux.jar = 1615222547000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-graphics/16/javafx-graphics-16.jar = 1615222569000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-graphics/16/javafx-graphics-16-linux.jar = 1615222574000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-base/16/javafx-base-16.jar = 1615222532000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-base/16/javafx-base-16-linux.jar = 1615222534000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-fxml/16/javafx-fxml-16.jar = 1615222556000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-fxml/16/javafx-fxml-16-linux.jar = 1615222563000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-web/16/javafx-web-16.jar = 1615222609000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-web/16/javafx-web-16-linux.jar = 1615222612000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-media/16/javafx-media-16.jar = 1615222583000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-media/16/javafx-media-16-linux.jar = 1615222588000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-swing/19/javafx-swing-19.jar = 1662981718000
+/home/maksikos973/.m2/repository/org/openjfx/javafx-swing/19/javafx-swing-19-linux.jar = 1662981744000
+/home/maksikos973/.m2/repository/com/squareup/okhttp3/okhttp/4.9.1/okhttp-4.9.1.jar = 1612029665000
+/home/maksikos973/.m2/repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar = 1597712944000
+/home/maksikos973/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.0/kotlin-stdlib-common-1.4.0.jar = 1597342891000
+/home/maksikos973/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.10/kotlin-stdlib-1.4.10.jar = 1599160726000
+/home/maksikos973/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar = 1387282242000
+/home/maksikos973/.m2/repository/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar = 1629475731000
+/home/maksikos973/.m2/repository/org/json/json/20210307/json-20210307.jar = 1615175739000
+/home/maksikos973/.m2/repository/com/google/zxing/javase/3.4.1/javase-3.4.1.jar = 1601427458000
+/home/maksikos973/.m2/repository/com/google/zxing/core/3.4.1/core-3.4.1.jar = 1601427435000
+/home/maksikos973/.m2/repository/com/beust/jcommander/1.78/jcommander-1.78.jar = 1566494215000
+/home/maksikos973/.m2/repository/org/apache/pdfbox/pdfbox-tools/2.0.24/pdfbox-tools-2.0.24.jar = 1623080158000
+/home/maksikos973/.m2/repository/org/apache/pdfbox/pdfbox-debugger/2.0.24/pdfbox-debugger-2.0.24.jar = 1623080144000
+/home/maksikos973/.m2/repository/org/apache/pdfbox/pdfbox/2.0.24/pdfbox-2.0.24.jar = 1623080087000
+/home/maksikos973/.m2/repository/org/apache/pdfbox/fontbox/2.0.24/fontbox-2.0.24.jar = 1623079996000
+/home/maksikos973/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar = 1404583945000
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/src/main/java = 1713948682083
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/allpackages-index.html = 1715237330340
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/stylesheet.css = 1715237330360
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/copy.svg = 1715237330360
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/overview-summary.html = 1715237330353
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/element-list = 1715237330240
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/search.js = 1715237330360
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/allclasses-index.html = 1715237330340
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/overview-tree.html = 1715237330326
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/help-doc.html = 1715237330356
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/tag-search-index.js = 1715237330343
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/module-search-index.js = 1715237330343
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/link.svg = 1715237330360
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/search.html = 1715237330353
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/index-all.html = 1715237330350
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/search-page.js = 1715237330360
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/member-search-index.js = 1715237330343
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/script.js = 1715237330360
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/type-search-index.js = 1715237330343
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/package-search-index.js = 1715237330343
+/home/maksikos973/Desktop/UniShit/2 year(summer semester)/java2/java2_semestralna_praca/vizitkar/target/site/apidocs/index.html = 1715237330330
