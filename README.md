@@ -1,7 +1,7 @@
 # Vizitkar
 ## _The Ultimate Business Card Generator_
 
-[![N|Solid](https://upload.wikimedia.org/wikipedia/commons/8/8f/Example_of_business_card.png)](https://github.com/yourgithub/vizitkar)
+![BusinessCard](https://designcuts.b-cdn.net/wp-content/uploads/2023/03/creative-business-card.jpg)
 
 Vizitkar is a powerful JavaFX application that allows users to create and manage digital business cards, seamlessly integrating QR codes and PDF generation capabilities.
 
