@@ -1,0 +1,1232 @@
+package com.vizitkar.BusinessCardGUI.BusinessCardGUI;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import com.vizitkar.BusinessCardGUI.Dialogs.Dialogs;
+import com.vizitkar.UI.UIComponents.UIComponents;
+import com.vizitkar.Utils.AnimationUtils.AnimationUtils;
+
+/**
+ * The BusinessCardGUI class represents the graphical user interface for the Vizitkar application.
+ * It extends the Application class and provides the start method to initialize and display the GUI.
+ */
+
+public class BusinessCardGUI extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Vizitkar");
+
+        BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: transparent;");  // Set the root background to transparent
+
+        
+
+        Scene scene = new Scene(root, 800, 600, Color.TRANSPARENT);  // Set scene's initial fill to transparent
+
+        // Set the top and center of the BorderPane using your UIComponents
+        root.setTop(UIComponents.createLogoView());
+
+        // Create and add the styled button at the center of the root pane
+        StackPane buttonStackPane = UIComponents.createCenteredButton("+", e -> Dialogs.handleAddButton(primaryStage), 100, 100);
+        root.setCenter(buttonStackPane);
+
+        // Set up the animated background for the scene
+        AnimationUtils.createdAnimatedBackground(scene);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void createMainWindow(Stage primaryStage) {
+        BusinessCardGUI businessCardGUI = new BusinessCardGUI();
+        businessCardGUI.start(primaryStage);
+    }
+
+}
+package com.vizitkar.BusinessCardGUI.Dialogs;
+
+
+
+import java.io.File;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+
+import javafx.scene.control.Alert;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;  
+
+import javafx.scene.control.TextField;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import com.vizitkar.Buttons.ExportButton.ExportButton;
+import com.vizitkar.Buttons.QRCodeButton.QRCodeButton;
+import com.vizitkar.Buttons.TextResizeButton.TextResizeButton;
+import com.vizitkar.Manager.TemplateManager.TemplateManager;
+import com.vizitkar.UI.CardUI.CardUI;
+import com.vizitkar.Utils.PrintUtils.PrintUtils;
+
+
+/**
+ * The Dialogs class provides methods for handling dialog windows in the business card GUI application.
+ */
+public class Dialogs {
+
+    public static void handleAddButton(Stage primaryStage) {
+        Stage inputStage = new Stage();
+        inputStage.setTitle("Enter Business Card Information");
+    
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20));
+    
+        TextField nameField = new TextField();
+        nameField.setPromptText("Name");
+        TextField surnameField = new TextField();
+        surnameField.setPromptText("Surname");
+    
+        ComboBox<String> titleComboBox = new ComboBox<>();
+        titleComboBox.getItems().addAll("Chief", "Assistant", "Project Manager", "HR Manager", "Marketing Manager");
+        titleComboBox.setPromptText("Title");
+    
+        TextField companyField = new TextField();
+        companyField.setPromptText("Company");
+        TextField addressField = new TextField();
+        addressField.setPromptText("Address");
+    
+         
+        TextField phoneField = new TextField();
+        phoneField.setPromptText("Phone Number");
+        TextField emailField = new TextField();
+        emailField.setPromptText("Email");
+        TextField websiteField = new TextField();
+        websiteField.setPromptText("Website");
+    
+        gridPane.add(new Label("Name:"), 0, 0);
+        gridPane.add(nameField, 1, 0);
+        gridPane.add(new Label("Surname:"), 0, 1);
+        gridPane.add(surnameField, 1, 1);
+        gridPane.add(new Label("Title:"), 0, 2);
+        gridPane.add(titleComboBox, 1, 2);
+        gridPane.add(new Label("Company:"), 0, 3);
+        gridPane.add(companyField, 1, 3);
+        gridPane.add(new Label("Address:"), 0, 4);
+        gridPane.add(addressField, 1, 4);
+        gridPane.add(new Label("Phone Number:"), 0, 5);
+        gridPane.add(phoneField, 1, 5);
+        gridPane.add(new Label("Email:"), 0, 6);
+        gridPane.add(emailField, 1, 6);
+        gridPane.add(new Label("Website:"), 0, 7);
+        gridPane.add(websiteField, 1, 7);
+    
+      
+        
+
+    
+        ImageView logoView = new ImageView();
+        logoView.setFitWidth(100);
+        logoView.setFitHeight(100);
+        Button uploadLogoButton = new Button("Upload Logo");
+        uploadLogoButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose Logo Image");
+            File selectedFile = fileChooser.showOpenDialog(inputStage);
+            if (selectedFile != null) {
+                Image image = new Image(selectedFile.toURI().toString());
+                logoView.setImage(image);
+            }
+        });
+        gridPane.add(new Label("Logo:"), 0, 8);
+        gridPane.add(uploadLogoButton, 1, 8);
+        gridPane.add(logoView, 2, 8);
+    
+        Button continueButton = new Button("Continue");
+        continueButton.setOnAction(event -> {
+            // Validate input fields
+            if (nameField.getText().isEmpty() || surnameField.getText().isEmpty() ||
+                    titleComboBox.getValue() == null || companyField.getText().isEmpty() ||
+                    addressField.getText().isEmpty() || phoneField.getText().isEmpty() ||
+                    emailField.getText().isEmpty() || websiteField.getText().isEmpty()) {
+                // Show warning if any input field is empty
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in all fields.");
+                alert.showAndWait();
+                return; // Exit if any field is empty
+            }
+    
+            // Phone validation: allow only numbers and "+"
+            String phone = phoneField.getText();
+            if (!phone.matches("[0-9+]+")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter a valid phone number.");
+                alert.showAndWait();
+                return; // Exit if phone format is invalid
+            }
+    
+            // Email validation: require "@" character
+            String email = emailField.getText();
+            if (!email.contains("@")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter a valid email address.");
+                alert.showAndWait();
+                return; // Exit if email format is invalid
+            }
+    
+            // Continue with processing if all validations pass
+            VBox userDataBox = new VBox();
+            userDataBox.getChildren().addAll(new Label("Name: " + nameField.getText()),
+                    new Label("Surname: " + surnameField.getText()),
+                    new Label("Title: " + titleComboBox.getValue()),
+                    new Label("Company: " + companyField.getText()),
+                    new Label("Address: " + addressField.getText()),
+                    new Label("Phone: " + phoneField.getText()),
+                    new Label("Email: " + emailField.getText()),
+                    new Label("Website: " + websiteField.getText()));
+    
+            Stage userDataStage = new Stage();
+            userDataStage.setTitle("User Data");
+            userDataStage.setScene(new Scene(userDataBox));
+            userDataStage.show();
+    
+            suggestDesignOptions(nameField.getText(), surnameField.getText(), titleComboBox.getValue(), companyField.getText(),
+                    addressField.getText(), phoneField.getText(), emailField.getText(), websiteField.getText(),
+                    logoView.getImage(), Color.WHITE);
+    
+            inputStage.close();
+        });
+
+        
+    
+        gridPane.add(continueButton, 0, 9, 3, 1);
+    
+        Scene inputScene = new Scene(gridPane);
+        inputStage.setScene(inputScene);
+    
+        inputStage.show();
+    }
+
+    public static void suggestDesignOptions(String name, String surname, String title, String company, String address,
+                                  String phone, String email, String website, Image image, Color bgColor) {
+        Stage designStage = new Stage();
+        designStage.setTitle("Design Options");
+
+        WebView webView = setupWebView(name, surname, title, company, address, phone, email, website, image, bgColor);
+        VBox designBox = new VBox(10);
+        designBox.getChildren().add(webView);
+
+        HBox buttonBox = setupButtonBox(webView, designStage, name, surname, title, company, address, phone, email, website, image);
+        designBox.getChildren().add(buttonBox);
+
+        Scene scene = new Scene(designBox, 800, 600);
+        designStage.setScene(scene);
+        designStage.show();
+    }
+
+    public static WebView setupWebView(String name, String surname, String title, String company, String address,
+                                String phone, String email, String website, Image image, Color bgColor) {
+        WebView webView = new WebView();
+        WebEngine webEngine = webView.getEngine();
+        webEngine.loadContent(CardUI.businessCardHTML(name, surname, title, company, address, phone, email, website, image, bgColor));
+        return webView;
+    }
+
+    public static HBox setupButtonBox(WebView webView, Stage designStage, String name, String surname, String title, String company, String address, String phone, String email, String website, Image image) {
+        Button exportButton = ExportButton.createExportButton(webView, designStage);
+        Button generateQRButton = QRCodeButton.createQRCodeButton(name, surname, title, company, address, phone, email, website, webView);
+        Button resizeTextButton = TextResizeButton.createResizeTextButton(webView);
+        Button templateButton = new Button("Choose Template");
+        templateButton.setOnAction(event -> TemplateManager.openTemplateChooser(designStage, webView, name, surname, title, company, address, phone, email, website, image));
+        Button printButton = new Button("Print Business Card");
+        printButton.setOnAction(e -> PrintUtils.printNode(webView, designStage));
+        Button checkPrintersButton = new Button("Check Printers");
+        checkPrintersButton.setOnAction(e -> PrintUtils.checkPrintServices());
+    
+        HBox buttonBox = new HBox(10, exportButton, generateQRButton, resizeTextButton, templateButton, printButton, checkPrintersButton);
+        buttonBox.setAlignment(Pos.CENTER);
+        return buttonBox;
+    }
+}
+package com.vizitkar.Buttons.ExportButton;
+
+
+
+
+
+import java.io.File;
+import java.io.IOException;
+
+
+import javax.imageio.ImageIO;
+
+import com.vizitkar.Utils.FileIOUtils.FileIOUtils;
+
+import javafx.embed.swing.SwingFXUtils;
+
+
+import javafx.scene.SnapshotParameters;
+
+import javafx.scene.control.Button;
+
+
+
+import javafx.scene.image.WritableImage;
+
+
+import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+
+/**
+ * This class creates a button for exporting the content of a WebView as an image or PDF.
+ */
+public class ExportButton {
+
+    /**
+     * This method creates an Export button for the given WebView and Stage.
+     * Clicking the button allows users to save the WebView content as an image or PDF.
+     *
+     * @param webView The WebView containing the content to be exported.
+     * @param designStage The Stage where the WebView is displayed.
+     * @return A Button object with the label "Export".
+     */
+    public static Button createExportButton(WebView webView, Stage designStage) {
+        Button exportButton = new Button("Export");
+
+        // Set action handler for the button
+        exportButton.setOnAction(event -> {
+            // Capture a snapshot of the WebView content
+            WritableImage snapshot = webView.snapshot(new SnapshotParameters(), null);
+
+            // Open a file chooser dialog for saving the export
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Image or PDF");
+
+            // Define file extension filters for supported formats
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("PDF", "*.pdf"),
+                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+            );
+
+            File file = fileChooser.showSaveDialog(designStage);
+            if (file != null) {
+                try {
+                    // Save the captured image based on the chosen format
+                    saveAsFile(snapshot, file);
+                } catch (IOException e) {
+                    System.err.println("Failed to save file: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        return exportButton;
+    }
+
+    /**
+     * Saves the captured image to the specified file based on its extension.
+     *
+     * @param image The captured image from the WebView.
+     * @param file The chosen file for saving the export.
+     * @throws IOException If an error occurs during file saving.
+     */
+    private static void saveAsFile(WritableImage image, File file) throws IOException {
+        String extension = getFileExtension(file);
+        switch (extension) {
+            case "pdf":
+                // Use FileIOUtils.saveAsPDF (assumed to be in another class) to save as PDF
+                FileIOUtils.saveAsPDF(image, file);
+                break;
+            case "png":
+            case "jpg":
+            case "jpeg":
+                // Use ImageIO to write the image to the file
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), extension, file);
+                System.out.println("Image saved successfully to: " + file.getAbsolutePath());
+                break;
+            default:
+                System.out.println("Unsupported file format: " + extension);
+        }
+    }
+
+    /**
+     * Extracts the file extension from the given file name.
+     *
+     * @param file The file object containing the name.
+     * @return The extracted file extension in lowercase (or empty string if not found).
+     */
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if (fileName.lastIndexOf('.') > 0) {
+            return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        }
+        return "";
+    }
+}    
+package com.vizitkar.Buttons.QRCodeButton;
+import java.awt.image.BufferedImage;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+
+import javafx.embed.swing.SwingFXUtils;
+
+import javafx.scene.control.Button;
+
+
+import javafx.scene.image.Image;
+
+import javafx.scene.web.WebView;
+
+import com.vizitkar.UI.CardUI.CardUI;
+import com.vizitkar.Utils.QRCodeUtilis.QRCodeUtils;
+
+
+/**
+ * This class creates a button for generating a QR Code containing the user's business card information.
+ */
+public class QRCodeButton {
+
+    /**
+     * This method creates a "Generate QR Code" button for the given user details and WebView.
+     * Clicking the button generates a QR Code based on the user's vCard data and updates the WebView to display it.
+     *
+     * @param name User's name.
+     * @param surname User's surname.
+     * @param title User's title.
+     * @param company User's company.
+     * @param address User's address.
+     * @param phone User's phone number.
+     * @param email User's email address.
+     * @param website User's website.
+     * @param webView The WebView where the generated QR Code will be displayed.
+     * @return A Button object with the label "Generate QR Code".
+     */
+    public static Button createQRCodeButton(String name, String surname, String title, String company, String address, String phone, String email, String website, WebView webView) {
+        Button generateQRButton = new Button("Generate QR Code");
+
+        // Set action handler for the button
+        generateQRButton.setOnAction(event -> {
+            // Print user info for debugging (commented out)
+            // System.out.println("Generating QR for: " + name + ", " + surname + ", " + title + ", " + company + ", " + address + ", " + phone + ", " + email + ", " + website);
+
+            // Generate vCard data string containing user information
+            String vCardData = QRCodeUtils.generateVCardData(name, surname, title, company, address, phone, email, website);
+
+            try {
+                // Generate QR Code image from vCard data
+                BitMatrix bitMatrix = new QRCodeWriter().encode(vCardData, BarcodeFormat.QR_CODE, 200, 200);
+                BufferedImage qrCodeBufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+                Image qrCodeImage = SwingFXUtils.toFXImage(qrCodeBufferedImage, null);
+
+                // Convert QR Code image to Base64 string
+                String qrCodeBase64 = CardUI.convertImageToBase64(qrCodeImage);
+
+                // Update WebView content to display the QR Code image
+                webView.getEngine().executeScript(
+                        "document.getElementById('qr-code').innerHTML = '<img src=\"data:image/png;base64," + qrCodeBase64 + "\" style=\"width:100px; height:100px; display:block;\" />'; " +
+                                "document.getElementById('qr-code').style.display = 'block';"
+                );
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return generateQRButton;
+    }
+}
+// package com.vizitkar.BusinessCardGUI;
+
+
+// import javafx.scene.control.Alert;
+// import javafx.scene.control.Button;
+
+// import javafx.scene.control.Slider;
+
+
+// import javafx.scene.web.WebView;
+
+
+// public class TextResizeButton {
+//     private Button createResizeTextButton(WebView webView) {
+//         Button resizeTextButton = new Button("Resize Text");
+//         resizeTextButton.setOnAction(event -> {
+//             Slider fontSizeSlider = new Slider(8, 24, 14);
+//             fontSizeSlider.setShowTickLabels(true);
+//             fontSizeSlider.setShowTickMarks(true);
+//             fontSizeSlider.setMajorTickUnit(1);
+//             fontSizeSlider.valueProperty().addListener((obs, oldVal, newVal) -> webView.getEngine().executeScript("document.body.style.fontSize='" + newVal.intValue() + "px';"));
+//             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//             alert.setTitle("Adjust Font Size");
+//             alert.setHeaderText("Adjust the font size using the slider.");
+//             alert.getDialogPane().setContent(fontSizeSlider);
+//             alert.showAndWait();
+//         });
+//         return resizeTextButton;
+//     }
+
+    
+// }
+
+
+package com.vizitkar.Buttons.TextResizeButton;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+import javafx.scene.web.WebView;
+import javafx.scene.control.Alert;
+
+/**
+ * This class creates a button that allows users to adjust the font size of the text in a WebView.
+ */
+public class TextResizeButton {
+
+    /**
+     * This method creates a "Resize Text" button for the given WebView.
+     * Clicking the button displays a dialog with a slider to control the font size of the WebView content.
+     *
+     * @param webView The WebView whose text size can be adjusted.
+     * @return A Button object with the label "Resize Text".
+     */
+    public static Button createResizeTextButton(WebView webView) {
+        Button resizeTextButton = new Button("Resize Text");
+
+        // Set action handler for the button
+        resizeTextButton.setOnAction(event -> {
+            // Create a slider for adjusting font size (8 to 24, starting at 14)
+            Slider fontSizeSlider = new Slider(8, 24, 14);
+            fontSizeSlider.setShowTickLabels(true); // Display tick labels for values
+            fontSizeSlider.setShowTickMarks(true); // Display tick marks
+            fontSizeSlider.setMajorTickUnit(1); // Major tick marks every 1 unit
+
+            // Update WebView font size based on slider value change
+            fontSizeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+                webView.getEngine().executeScript("document.body.style.fontSize='" + newVal.intValue() + "px';");
+            });
+
+            // Create an information dialog with the slider
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Adjust Font Size");
+            alert.setHeaderText("Adjust the font size using the slider.");
+            alert.getDialogPane().setContent(fontSizeSlider); // Add slider to dialog content
+
+            alert.showAndWait(); // Display the dialog and wait for user interaction
+        });
+
+        return resizeTextButton;
+    }
+}
+package com.vizitkar.Helper.ImageTransitionHelper;
+
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
+/**
+ * This class provides a helper method to create an image transition animation for an ImageView.
+ */
+public class ImageTransitionHelper {
+
+    /**
+     * This method creates a continuous image transition animation for the given ImageView.
+     * It cycles through a predefined set of images, displaying each one for a specific duration.
+     *
+     * @param imageView The ImageView where the image transition will be applied.
+     */
+    public static void createImageTransition(ImageView imageView) {
+        // Define image paths
+        Image[] images = {
+                new Image("img/1.jpg"),
+                new Image("img/2.jpg"),
+                new Image("img/3.jpg")
+        };
+
+        // Create a timeline for the animation
+        Timeline timeline = new Timeline();
+
+        // Define keyframes for each image transition
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.seconds(0), new KeyValue(imageView.imageProperty(), images[0])), // Set first image at 0 seconds
+                new KeyFrame(Duration.seconds(3), new KeyValue(imageView.imageProperty(), images[1])), // Transition to second image at 3 seconds
+                new KeyFrame(Duration.seconds(6), new KeyValue(imageView.imageProperty(), images[2]))  // Transition to third image at 6 seconds
+        );
+
+        // Set the timeline to repeat indefinitely
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        // Play the animation
+        timeline.play();
+    }
+}
+package com.vizitkar.Manager.TemplateManager;
+import java.util.Arrays;
+import java.util.List;
+
+import com.vizitkar.UI.CardUI.CardUI;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;  
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+
+
+public class TemplateManager {
+
+    /**
+     * This method displays a dialog for the user to choose a template based on their job title.
+     *
+     * @param parentStage The parent stage of the dialog.
+     * @param webView The WebView where the business card design will be displayed.
+     * @param name User's name.
+     * @param surname User's surname.
+     * @param title User's title.
+     * @param company User's company.
+     * @param address User's address.
+     * @param phone User's phone number.
+     * @param email User's email address.
+     * @param website User's website (not used in this method).
+     * @param image An optional image for the business card (can be null).
+     */
+    public static void openTemplateChooser(Stage parentStage, WebView webView, String name, String surname, String title, String company, String address, String phone, String email, String website, Image image) {
+        // Create a new stage for the template selection dialog
+        Stage stage = new Stage();
+        stage.setTitle("Choose a Template");
+
+        // Define layout for the dialog
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+
+        // Prepare alert for unauthorized access
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("You are not authorized to select this template.");
+
+        // Define buttons for different templates
+        Button template1 = new Button("Chief");
+        template1.setUserData(1);
+        Button template2 = new Button("Assistant");
+        template2.setUserData(2);
+        Button template3 = new Button("Project Manager");
+        template3.setUserData(3);
+        Button template4 = new Button("HR Manager");
+        template4.setUserData(4);
+        Button template5 = new Button("Marketing Manager");
+        template5.setUserData(5);
+
+        List<Button> buttons = Arrays.asList(template1, template2, template3, template4, template5);
+
+        // Set button visibility and enabled state based on the title
+        buttons.forEach(button -> {
+            button.setDisable(!button.getText().equals(title));
+            button.setVisible(button.getText().equals(title));
+        });
+
+        // Event handler for template buttons
+        EventHandler<ActionEvent> templateHandler = event -> {
+            Button source = (Button) event.getSource();
+            if (source.isDisabled()) {
+                alert.showAndWait();
+            } else {
+                int templateNumber = (int) source.getUserData();
+                applyTemplate(templateNumber, webView, name, surname, title, company, address, phone, email, website, image);
+            }
+        };
+
+        // Assign the same handler to all buttons
+        buttons.forEach(button -> button.setOnAction(templateHandler));
+
+        // Add UI elements to the layout
+        layout.getChildren().addAll(new Label("Select a Template:"), template1, template2, template3, template4, template5);
+
+        // Create the scene and set it on the stage
+        Scene scene = new Scene(layout, 300, 200);
+        stage.setScene(scene);
+
+        // Set the parent stage and show the dialog
+        stage.initOwner(parentStage);
+        stage.show();
+    }
+
+    /**
+     * This method applies the chosen template to the WebView.
+     *
+     * @param templateNumber An integer representing the chosen template.
+     * @param webView The WebView where the business card design will be displayed.
+     * @param name User's name.
+     * @param surname User's surname.
+     * @param title User's title.
+     * @param company User's company.
+     * @param address User's address.
+     * @param phone User's phone number.
+     * @param email User's email address.
+     * @param website User's website (not used in this method).
+     * @param image An optional image for the business card (can be null).
+     */
+    
+    
+    
+    
+    
+    /**
+     * Applies a template to a WebView based on the given template number and input data.
+     *
+     * @param templateNumber The number of the template to apply.
+     * @param webView The WebView to apply the template to.
+     * @param name The name to be included in the template.
+     * @param surname The surname to be included in the template.
+     * @param title The title to be included in the template.
+     * @param company The company to be included in the template.
+     * @param address The address to be included in the template.
+     * @param phone The phone number to be included in the template.
+     * @param email The email address to be included in the template.
+     * @param website The website URL to be included in the template.
+     * @param image The image to be included in the template.
+     */
+    private static void applyTemplate(int templateNumber, WebView webView, String name, String surname, String title, String company, String address, String phone, String email, String website, Image image) {
+        switch (templateNumber) {
+            case 1:
+                webView.getEngine().loadContent(generateTemplateHTML(0, name, surname, title, company, address, phone, email, website, image));
+                break;
+            case 2:
+                webView.getEngine().loadContent(generateTemplateHTML(1, name, surname, title, company, address, phone, email, website, image));
+                break;
+            case 3:
+                webView.getEngine().loadContent(generateTemplateHTML(2, name, surname, title, company, address, phone, email, website, image));
+                break;
+            case 4:
+                webView.getEngine().loadContent(generateTemplateHTML(3, name, surname, title, company, address, phone, email, website, image));
+                break;
+            case 5:
+                webView.getEngine().loadContent(generateTemplateHTML(4, name, surname, title, company, address, phone, email, website, image));
+                break;    
+        }
+    }
+
+    private static String generateTemplateHTML(int templateNumber, String name, String surname, String title, String company, String address, String phone, String email, String website, Image image) {
+        String base64Image = (image != null) ? CardUI.convertImageToBase64(image) : "";
+        String[] backgroundStyles = {
+            "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)", // Template 1: Purple gradient
+            "linear-gradient(45deg, #5433FF 0%, #20BDFF 50%, #A5FECB 100%)", // Template 1: Alternative gradient
+            "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)", // Template 2: Green gradient
+            "linear-gradient(45deg, #0FF0B3 0%, #036ED9 100%)", // Template 2: Alternative gradient
+            "linear-gradient(135deg, #ff0084 0%, #33001b 100%)", // Template 3: Red gradient
+            "linear-gradient(45deg, #FAD961 0%, #F76B1C 100%)", // Template 3: Alternative gradient
+            "linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%)", // Template 4: Pink to blue gradient
+            "linear-gradient(45deg, #F7971E 0%, #FFD200 100%)", // Template 4: Alternative gradient
+            "linear-gradient(135deg, #20bf55 0%, #01baef 100%)", // Template 5: Teal gradient
+            "linear-gradient(45deg, #9D50BB 0%, #6E48AA 100%)" // Template 5: Alternative gradient
+        };
+        
+    
+        String backgroundStyle = backgroundStyles[templateNumber % backgroundStyles.length];
+    
+        return "<html><head><style>" +
+                "body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; }" +
+                ".card { position: relative; max-width: 690px; width: 100%; height: auto; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.3); background-color: #fff; margin: 20px; border-radius: 10px; background: " + backgroundStyle + ";}" +
+                ".header { height: 150px; color: white; display: flex; flex-direction: column; justify-content: center; padding: 20px; position: relative; }" +
+                ".logo { position: absolute; right: 10px; top: 10px; width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background: white; }" +
+                ".logo img { max-width: 100%; height: auto; }" +
+                ".contact-info { padding: 20px; }" +
+                ".contact-row { display: flex; align-items: center; margin-bottom: 10px; }" +
+                ".contact-icon { width: 24px; height: 24px; margin-right: 10px; background-size: cover; }" +
+                ".qr-code { position: absolute; bottom: 20px; right: 20px; }" +
+                ".overlay { position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; background: rgba(255, 255, 255, 0.7); }" +
+                ".company-footer { color: white; text-align: center; padding: 20px; font-size: 14px; }" +
+                ".company-logo { width: 50px; height: 50px; margin: 0 auto; display: block; }" +
+                "</style></head><body>" +
+                "<div class='card'>" +
+                "   <div class='header' id='header'>" +
+                "       <div class='logo'><img src='data:image/png;base64," + base64Image + "'/></div>" +
+                "       <strong>" + name + " " + surname + "</strong><br>" +
+                "       " + title +
+                "   </div>" +
+                "   <div class='contact-info'>" +
+                "       <div class='contact-row'><img src='https://w7.pngwing.com/pngs/731/937/png-transparent-mobile-phones-telephone-handset-phone-icon-miscellaneous-angle-telephone-call-thumbnail.png' class='contact-icon'>" + phone + "</div>" +
+                "       <div class='contact-row'><img src='https://w7.pngwing.com/pngs/331/955/png-transparent-email-marketing-computer-icons-email-address-email-miscellaneous-text-rectangle-thumbnail.png' class='contact-icon'>" + email + "</div>" +
+                "       <div class='contact-row'><img src='https://w7.pngwing.com/pngs/239/958/png-transparent-address-others-cdr-angle-black-thumbnail.png' class='contact-icon'>" + address + "</div>" +
+                "   </div>" +
+                "   <div class='qr-code' id='qr-code'></div>" +
+                "   <div class='company-footer' id='footer'>" +
+                "       <img src='https://logos-world.net/wp-content/uploads/2021/03/Kia-Symbol.png' class='company-logo'><br>" +
+                "       " + company +
+                "   </div>" +
+                "   <div class='overlay'></div>" + 
+                "</div>" +
+                "<input type='color' id='colorPicker'>" +
+                "<script>" +
+                "   document.getElementById('colorPicker').addEventListener('input', function() {" +
+                "       var color = this.value;" +
+                "       document.getElementById('header').style.background = color;" +
+                "       document.getElementById('footer').style.background = color;" +
+                "       updateColors(color, ['header', 'footer']);" +
+                "   });" +
+                "   function updateColors(color, elementIds) {" +
+                "       var rgb = color.replace('#', '').match(/.{1,2}/g).map(function(c) { return parseInt(c, 16); });" +
+                "       var brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;" +
+                "       var textColor = brightness > 125 ? 'black' : 'white';" +
+                "       elementIds.forEach(function(id) {" +
+                "           document.getElementById(id).style.color = textColor;" +
+                "       });" +
+                "   }" +
+                "</script>" +
+                "</body></html>";
+    }
+}
+package com.vizitkar.UI.CardUI;
+
+
+import java.io.ByteArrayOutputStream;
+
+import java.io.IOException;
+
+import java.util.Base64;
+
+
+import javax.imageio.ImageIO;
+import javafx.embed.swing.SwingFXUtils;
+
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+
+public class CardUI {
+    public static String businessCardHTML(String name, String surname, String title, String company, String address,
+            String phone, String email, String website, Image image, Color bgColor) {
+        String base64Image = convertImageToBase64(image);
+        return "<html><head><style>" +
+        "body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; }" +
+        ".card { position: relative; max-width: 690px; width: 100%; height: auto; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.3); background-color: #fff; margin: 20px; }" +
+        ".header { height: 150px; background: linear-gradient(to right, #ff0000, #d20000); color: white; display: flex; flex-direction: column; justify-content: center; padding: 20px; position: relative; }" +
+        ".logo { position: absolute; right: 10px; top: 10px; width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background: white; }" +
+        ".logo img { max-width: 100%; height: auto; }" +
+        ".contact-info { padding: 20px; }" +
+        ".contact-row { display: flex; align-items: center; margin-bottom: 10px; }" +
+        ".contact-icon { width: 24px; height: 24px; margin-right: 10px; background-size: cover; }" +
+        ".qr-code { position: absolute; bottom: 20px; right: 20px; }" +
+        ".overlay { position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; background: rgba(255, 255, 255, 0.7); }" +
+        ".company-footer { background: #d20000; color: white; text-align: center; padding: 20px; font-size: 14px; }" +
+        ".company-logo { width: 50px; height: 50px; margin: 0 auto; display: block; }" +
+        "</style></head><body>" +
+        "<div class='card'>" +
+        "   <div class='header' id='header'>" +
+        "       <div class='logo'><img src='data:image/png;base64," + base64Image + "'/></div>" +
+        "       <strong>" + name + " " + surname + "</strong><br>" +
+        "       " + title +
+        "   </div>" +
+        "   <div class='contact-info'>" +
+        "       <div class='contact-row'><img src='https://w7.pngwing.com/pngs/731/937/png-transparent-mobile-phones-telephone-handset-phone-icon-miscellaneous-angle-telephone-call-thumbnail.png' class='contact-icon'>" + phone + "</div>" +
+        "       <div class='contact-row'><img src='https://w7.pngwing.com/pngs/331/955/png-transparent-email-marketing-computer-icons-email-address-email-miscellaneous-text-rectangle-thumbnail.png' class='contact-icon'>" + email + "</div>" +
+        "       <div class='contact-row'><img src='https://w7.pngwing.com/pngs/239/958/png-transparent-address-others-cdr-angle-black-thumbnail.png' class='contact-icon'>" + address + "</div>" +
+        "   </div>" +
+        "   <div class='qr-code' id='qr-code'></div>" +
+        "   <div class='company-footer' id='footer'>" +
+        "       <img src='https://logos-world.net/wp-content/uploads/2021/03/Kia-Symbol.png' class='company-logo'><br>" +
+        "       " + company +
+        "   </div>" +
+        "   <div class='overlay'></div>" + // Overlay
+        "</div>" +
+        "<input type='color' id='colorPicker'>" +
+        "<script>" +
+        "   document.getElementById('colorPicker').addEventListener('input', function() {" +
+        "       var color = this.value;" +
+        "       document.getElementById('header').style.background = color;" +
+        "       document.getElementById('footer').style.background = color;" +
+        "       updateColors(color, ['header', 'footer']);" +
+        "   });" +
+        "   function updateColors(color, elementIds) {" +
+        "       var rgb = color.replace('#', '').match(/.{1,2}/g).map(function(c) { return parseInt(c, 16); });" +
+        "       var brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;" +
+        "       var textColor = brightness > 125 ? 'black' : 'white';" +
+        "       elementIds.forEach(function(id) {" +
+        "           document.getElementById(id).style.color = textColor;" +
+        "       });" +
+        "   }" +
+        "</script>" +
+        "</body></html>";
+    }
+
+    /**
+        * Converts an Image object to a Base64 encoded string representation.
+        *
+        * @param image the Image object to be converted
+        * @return the Base64 encoded string representation of the image
+        */
+    public static String convertImageToBase64(Image image) {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        byte[] imageData = outputStream.toByteArray();
+
+        return Base64.getEncoder().encodeToString(imageData);
+    }
+}
+package com.vizitkar.UI.UIComponents;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.geometry.Pos;
+
+/**
+ * This class provides utility methods for creating common UI components with a consistent style.
+ */
+public class UIComponents {
+
+    /**
+     * This method creates a styled button with a green background, white text, and a specific font size.
+     *
+     * @param text The text to be displayed on the button.
+     * @param action The event handler to be associated with the button click.
+     * @return A Button object with the specified style and event handler.
+     */
+    public static Button createStyledButton(String text, EventHandler<ActionEvent> action) {
+        Button button = new Button(text);
+        // Set button style using CSS syntax
+        button.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 24px;");
+        button.setOnAction(action);
+        return button;
+    }
+
+    /**
+     * This method creates an ImageView for a logo with a predefined URL and sets its dimensions.
+     *
+     * @return An ImageView object displaying the logo image.
+     */
+    public static ImageView createLogoView() {
+        ImageView logoView = new ImageView(new Image("https://logos-world.net/wp-content/uploads/2021/03/Kia-Symbol.png"));
+        logoView.setFitWidth(100);
+        logoView.setFitHeight(100);
+        return logoView;
+    }
+
+    /**
+     * This method creates a StackPane containing a styled button centered within the pane.
+     *
+     * @param text The text to be displayed on the button.
+     * @param action The event handler to be associated with the button click.
+     * @param width The desired width for the button and StackPane.
+     * @param height The desired height for the button and StackPane.
+     * @return A StackPane object containing the centered styled button.
+     */
+    public static StackPane createCenteredButton(String text, EventHandler<ActionEvent> action, double width, double height) {
+        Button addButton = createStyledButton(text, action);
+        addButton.setPrefSize(width, height);
+        StackPane stack = new StackPane();
+        stack.getChildren().add(addButton);
+        StackPane.setAlignment(addButton, Pos.CENTER); // Minor correction: using setAlignment instead of a separate method call
+        return stack;
+    }
+}
+package com.vizitkar.Utils.AnimationUtils;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
+
+/**
+ * This class provides utility methods for creating animations in JavaFX.
+ */
+public class AnimationUtils {
+
+    /**
+     * Creates an animated background for the given scene.
+     *
+     * @param scene the scene to apply the animated background to
+     * @return the timeline representing the animated background
+     */
+    public static Timeline createdAnimatedBackground(Scene scene) {
+        Color[] colors = {Color.rgb(10, 10, 100), Color.rgb(10, 100, 10), Color.rgb(100, 10, 10)};
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < colors.length; i++) {
+            KeyValue keyValue = new KeyValue(scene.fillProperty(), colors[i]);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * 2), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        timeline.play();
+        return timeline;
+    }
+}
+package com.vizitkar.Utils.FileIOUtils;
+
+import javafx.scene.image.WritableImage;
+import javafx.embed.swing.SwingFXUtils;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+
+/**
+ * This class provides utility methods for saving images and WritableImages to files.
+ */
+public class FileIOUtils {
+
+    /**
+     * This method saves a WritableImage to a file in the specified format.
+     *
+     * @param image The WritableImage to be saved.
+     * @param file The file to save the image to.
+     * @param formatName The desired format of the saved image (e.g., "png", "jpg").
+     * @throws IOException If an error occurs during the saving process.
+     */
+    public static void saveImage(WritableImage image, File file, String formatName) throws IOException {
+        // Convert WritableImage to a standard BufferedImage (Java AWT)
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+
+        // Use Java Image I/O library to write the BufferedImage to a file
+        ImageIO.write(bImage, formatName, file);
+    }
+
+    /**
+     * This method saves a WritableImage to a PDF file.
+     *
+     * @param image The WritableImage to be saved.
+     * @param file The file to save the PDF to.
+     */
+    public static void saveAsPDF(WritableImage image, File file) {
+        try {
+            // Convert WritableImage to a BufferedImage
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+            // Create a byte array to hold the image data in PNG format
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "PNG", baos);
+            byte[] imageBytes = baos.toByteArray();
+
+            // Create a new PDF document
+            try (PDDocument doc = new PDDocument()) {
+                // Create a new page in A4 size
+                PDPage page = new PDPage(PDRectangle.A4);
+                doc.addPage(page);
+
+                // Convert image data to a PDF image object
+                PDImageXObject pdImage = PDImageXObject.createFromByteArray(doc, imageBytes, "snapshot");
+
+                // Calculate scaling to fit the image on the page while maintaining aspect ratio
+                float scale = Math.min(page.getMediaBox().getWidth() / pdImage.getWidth(),
+                                       page.getMediaBox().getHeight() / pdImage.getHeight());
+                float scaledWidth = pdImage.getWidth() * scale;
+                float scaledHeight = pdImage.getHeight() * scale;
+
+                // Calculate positions to center the image on the page
+                float xPosition = (page.getMediaBox().getWidth() - scaledWidth) / 2;
+                float yPosition = (page.getMediaBox().getHeight() - scaledHeight) / 2;
+
+                // Create a content stream for the page
+                try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
+                    // Draw the image on the page at the calculated position and size
+                    contents.drawImage(pdImage, xPosition, yPosition, scaledWidth, scaledHeight);
+                }
+
+                // Save the PDF document to the specified file
+                doc.save(file);
+            }
+        } catch (IOException e) {
+            // Handle potential exceptions during PDF creation
+            System.err.println("An error occurred while saving the PDF: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method gets the file extension from a File object.
+     *
+     * @param file The File object to get the extension from.
+     * @return The file extension as a lowercase string (e.g., "png", "jpg"), or an empty string if no extension is found.
+     */
+    public static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if (fileName.lastIndexOf('.') > 0) {
+            // Extract the substring starting from the last dot (.) to get the extension
+            return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        }
+        return "";
+    }
+}
+package com.vizitkar.Utils.PrintUtils;
+
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Window;
+
+
+/**
+ * This class provides utility methods for printing functionality.
+ */
+public class PrintUtils {
+
+    /**
+     * Prints the specified node using a printer job.
+     * 
+     * @param node   the node to be printed
+     * @param owner  the owner window for the print dialog
+     */
+    public static void printNode(Node node, Window owner) {
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        if (printerJob != null && printerJob.showPrintDialog(owner)) {
+            boolean success = printerJob.printPage(node);
+            if (success) {
+                printerJob.endJob();
+            } else {
+                System.out.println("Printing failed.");
+            }
+        } else {
+            System.out.println("Could not create a printer job.");
+        }
+    }
+
+    /**
+     * Checks for available print services and prints their names.
+     */
+    public static void checkPrintServices() {
+        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
+        if (printServices.length > 0) {
+            for (PrintService printer : printServices) {
+                System.out.println("Printer: " + printer.getName());
+            }
+        } else {
+            System.out.println("No printers found.");
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Printer Check");
+            alert.setHeaderText(null);
+            alert.setContentText("No printers found on this system.");
+            alert.showAndWait();
+        }
+    }
+}
+package com.vizitkar.Utils.QRCodeUtilis;
+
+
+
+
+/**
+ * This class provides utility methods for generating QR codes containing vCard data.
+ */
+public class QRCodeUtils {
+    
+    /**
+     * Generates vCard data based on the provided information.
+     * 
+     * @param name     the name of the person
+     * @param surname  the surname of the person
+     * @param title    the title of the person
+     * @param company  the company of the person
+     * @param address  the address of the person
+     * @param phone    the phone number of the person
+     * @param email    the email address of the person
+     * @param website  the website URL of the person
+     * @return         the generated vCard data as a string
+     */
+    public static String generateVCardData(String name, String surname, String title, String company, String address, String phone, String email, String website) {
+        return "BEGIN:VCARD\r\n" +
+               "VERSION:3.0\r\n" +
+               "FN:" + name + " " + surname + "\r\n" +
+               "TITLE:" + title + "\r\n" +
+               "ORG:" + company + "\r\n" +
+               "TEL:" + phone + "\r\n" +
+               "EMAIL:" + email + "\r\n" +
+               "URL:" + website + "\r\n" +
+               "ADR:" + address + "\r\n" +
+               "END:VCARD";
+    }
+}
+package com.vizitkar;
+
+import com.vizitkar.BusinessCardGUI.BusinessCardGUI.BusinessCardGUI;
+
+import javafx.application.Application;
+
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+      
+        BusinessCardGUI.createMainWindow(primaryStage);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+
+   
+
+
+   
+
+    
+
+
+
+
+
+
+
